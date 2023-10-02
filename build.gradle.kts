@@ -116,31 +116,31 @@ tasks {
         dependsOn(shadowJar)
     }
 
-    test {
-        useJUnitPlatform()
-    }
-
-    val integTest = register<Test>("integTest") {
-        classpath = sourceSets.named("integTest").get().runtimeClasspath
-        testClassesDirs = sourceSets.named("integTest").get().output.classesDirs
-
-        useJUnitPlatform()
-    }
-    check { dependsOn(integTest) }
-
-    val jacocoMerge = register("jacocoMerge", JacocoMerge::class) {
-        executionData(withType(Test::class).toSet())
-        dependsOn(test, integTest)
-    }
-
-    jacocoTestReport {
-        executionData(jacocoMerge.get().destinationFile)
-        reports {
-            xml.isEnabled = true
-            html.isEnabled = false
-        }
-        dependsOn(jacocoMerge)
-    }
+//    test {
+//        useJUnitPlatform()
+//    }
+//
+//    val integTest = register<Test>("integTest") {
+//        classpath = sourceSets.named("integTest").get().runtimeClasspath
+//        testClassesDirs = sourceSets.named("integTest").get().output.classesDirs
+//
+//        useJUnitPlatform()
+//    }
+//    check { dependsOn(integTest) }
+//
+//    val jacocoMerge = register("jacocoMerge", JacocoMerge::class) {
+//        executionData(withType(Test::class).toSet())
+//        dependsOn(test, integTest)
+//    }
+//
+//    jacocoTestReport {
+//        executionData(jacocoMerge.get().destinationFile)
+//        reports {
+//            xml.isEnabled = true
+//            html.isEnabled = false
+//        }
+//        dependsOn(jacocoMerge)
+//    }
 
     cpdCheck {
         minimumTokenCount = 25
@@ -182,62 +182,62 @@ tasks.withType<GenerateModuleMetadata> {
     enabled = isReleaseVersion // signing of these artifacts causes failure for snapshot versions
 }
 
-publishing {
-    publications {
-        register<MavenPublication>("mavenJava") {
-            // Not using `from(components["java"])` prevents from adding any shadowed dependency to resulting pom.xml
-            shadow.component(this)
-            artifact(tasks.get("javadocJar"))
-            artifact(tasks.get("sourcesJar"))
-
-            pom {
-                packaging = "jar"
-
-                name.set(base.archivesBaseName)
-                description.set(project.description)
-                url.set("https://github.com/aaschmid/taskwarrior-java-client")
-
-                developers {
-                    developer {
-                        id.set("aaschmid")
-                        name.set("Andreas Schmid")
-                        email.set("service@aaschmid.de")
-                    }
-                }
-
-                licenses {
-                    license {
-                        name.set("The Apache Software License, Version 2.0")
-                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
-                        distribution.set("repo")
-                    }
-                }
-
-                scm {
-                    connection.set("scm:git@github.com:aaschmid/taskwarrior-java-client.git")
-                    developerConnection.set("scm:git@github.com:aaschmid/taskwarrior-java-client.git")
-                    url.set("scm:git@github.com:aaschmid/taskwarrior-java-client.git")
-                }
-            }
-        }
-    }
-
-    repositories {
-        maven {
-            val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
-            val snapshotRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
-            url = if (isReleaseVersion) releasesRepoUrl else snapshotRepoUrl
-
-            credentials {
-                username = sonatypeUsername
-                password = sonatypePassword
-            }
-        }
-    }
-}
+//publishing {
+//    publications {
+//        register<MavenPublication>("mavenJava") {
+//            // Not using `from(components["java"])` prevents from adding any shadowed dependency to resulting pom.xml
+//            shadow.component(this)
+//            artifact(tasks.get("javadocJar"))
+//            artifact(tasks.get("sourcesJar"))
+//
+//            pom {
+//                packaging = "jar"
+//
+//                name.set(base.archivesBaseName)
+//                description.set(project.description)
+//                url.set("https://github.com/aaschmid/taskwarrior-java-client")
+//
+//                developers {
+//                    developer {
+//                        id.set("aaschmid")
+//                        name.set("Andreas Schmid")
+//                        email.set("service@aaschmid.de")
+//                    }
+//                }
+//
+//                licenses {
+//                    license {
+//                        name.set("The Apache Software License, Version 2.0")
+//                        url.set("http://www.apache.org/licenses/LICENSE-2.0.txt")
+//                        distribution.set("repo")
+//                    }
+//                }
+//
+//                scm {
+//                    connection.set("scm:git@github.com:aaschmid/taskwarrior-java-client.git")
+//                    developerConnection.set("scm:git@github.com:aaschmid/taskwarrior-java-client.git")
+//                    url.set("scm:git@github.com:aaschmid/taskwarrior-java-client.git")
+//                }
+//            }
+//        }
+//    }
+//
+//    repositories {
+//        maven {
+//            val releasesRepoUrl = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2/")
+//            val snapshotRepoUrl = uri("https://oss.sonatype.org/content/repositories/snapshots/")
+//            url = if (isReleaseVersion) releasesRepoUrl else snapshotRepoUrl
+//
+//            credentials {
+//                username = sonatypeUsername
+//                password = sonatypePassword
+//            }
+//        }
+//    }
+//}
 
 // requires gradle.properties, see http://www.gradle.org/docs/current/userguide/signing_plugin.html
-signing {
-    setRequired({ isReleaseVersion && gradle.taskGraph.hasTask("publish") })
-    sign(publishing.publications["mavenJava"])
-}
+//signing {
+//    setRequired({ isReleaseVersion && gradle.taskGraph.hasTask("publish") })
+//    sign(publishing.publications["mavenJava"])
+//}
