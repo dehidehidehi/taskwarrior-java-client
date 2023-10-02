@@ -237,7 +237,7 @@ tasks.withType<GenerateModuleMetadata> {
 //}
 
 // requires gradle.properties, see http://www.gradle.org/docs/current/userguide/signing_plugin.html
-signing {
-    setRequired({ isReleaseVersion && gradle.taskGraph.hasTask("publish") })
-    sign(publishing.publications["mavenJava"])
-}
+//signing {
+//    setRequired({ isReleaseVersion && gradle.taskGraph.hasTask("publish") })
+//    sign(publishing.publications["mavenJava"])
+//}
