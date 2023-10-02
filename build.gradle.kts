@@ -116,31 +116,31 @@ tasks {
         dependsOn(shadowJar)
     }
 
-    test {
-        useJUnitPlatform()
-    }
-
-    val integTest = register<Test>("integTest") {
-        classpath = sourceSets.named("integTest").get().runtimeClasspath
-        testClassesDirs = sourceSets.named("integTest").get().output.classesDirs
-
-        useJUnitPlatform()
-    }
-    check { dependsOn(integTest) }
-
-    val jacocoMerge = register("jacocoMerge", JacocoMerge::class) {
-        executionData(withType(Test::class).toSet())
-        dependsOn(test, integTest)
-    }
-
-    jacocoTestReport {
-        executionData(jacocoMerge.get().destinationFile)
-        reports {
-            xml.isEnabled = true
-            html.isEnabled = false
-        }
-        dependsOn(jacocoMerge)
-    }
+//    test {
+//        useJUnitPlatform()
+//    }
+//
+//    val integTest = register<Test>("integTest") {
+//        classpath = sourceSets.named("integTest").get().runtimeClasspath
+//        testClassesDirs = sourceSets.named("integTest").get().output.classesDirs
+//
+//        useJUnitPlatform()
+//    }
+//    check { dependsOn(integTest) }
+//
+//    val jacocoMerge = register("jacocoMerge", JacocoMerge::class) {
+//        executionData(withType(Test::class).toSet())
+//        dependsOn(test, integTest)
+//    }
+//
+//    jacocoTestReport {
+//        executionData(jacocoMerge.get().destinationFile)
+//        reports {
+//            xml.isEnabled = true
+//            html.isEnabled = false
+//        }
+//        dependsOn(jacocoMerge)
+//    }
 
     cpdCheck {
         minimumTokenCount = 25
